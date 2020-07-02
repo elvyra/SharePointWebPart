@@ -1,0 +1,13 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "tech-uzduotis-client-side-solution",
+    "id": "69ffc71b-304d-4624-aac4-9e2fb7942dd3",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "isDomainIsolated": false
+  },
+  "paths": {
+    "zippedPackage": "solution/tech-uzduotis.sppkg"
+  }
+}
