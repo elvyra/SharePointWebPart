@@ -6,10 +6,11 @@ import {
   PropertyPaneTextField,
 } from "@microsoft/sp-property-pane";
 import { BaseClientSideWebPart } from "@microsoft/sp-webpart-base";
+import { SPHttpClient, SPHttpClientResponse } from "@microsoft/sp-http";
 
 import * as strings from "SaskaitosWebPartStrings";
 import Saskaitos from "./components/Saskaitos";
-import { ISaskaitosProps } from "./components/ISaskaitosProps";
+import { ISaskaitosProps, BillsList } from "./components/ISaskaitosProps";
 
 export interface ISaskaitosWebPartProps {
   description: string;
@@ -18,7 +19,8 @@ export interface ISaskaitosWebPartProps {
 export default class SaskaitosWebPart extends BaseClientSideWebPart<
   ISaskaitosWebPartProps
 > {
-  public render(): void {
+  public async render(): Promise<void> {
+    console.log(await this._getListData());
     const element: React.ReactElement<ISaskaitosProps> = React.createElement(
       Saskaitos,
       {
@@ -58,5 +60,17 @@ export default class SaskaitosWebPart extends BaseClientSideWebPart<
         },
       ],
     };
+  }
+
+  private _getListData(): Promise<BillsList> {
+    return this.context.spHttpClient
+      .get(
+        this.context.pageContext.web.absoluteUrl +
+          `/_api/web/lists/GetByTitle('Sąskaitos')/Items`,
+        SPHttpClient.configurations.v1
+      )
+      .then((response: SPHttpClientResponse) => {
+        return response.json();
+      });
   }
 }
