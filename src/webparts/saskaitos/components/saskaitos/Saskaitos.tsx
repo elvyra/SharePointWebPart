@@ -16,8 +16,11 @@ export default class Saskaitos extends React.Component<ISaskaitosProps, {}> {
                 Demo web part displays list of all items in 'Sąskaitos' list in
                 SharePoint.
               </p>
-              <a href="https://aka.ms/spfx" className={styles.button}>
-                <span className={styles.label}>Learn more</span>
+              <a
+                href={this.props.absoluteUrl + "/Lists/Sskaitos/AllItems.aspx"}
+                className={styles.button}
+              >
+                <span className={styles.label}>View list</span>
               </a>
             </div>
           </div>
