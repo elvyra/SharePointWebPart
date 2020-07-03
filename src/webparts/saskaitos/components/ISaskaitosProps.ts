@@ -1,6 +1,7 @@
 export interface ISaskaitosProps {
   description: string;
   absoluteUrl: string;
+  list: BillsList;
 }
 
 export interface BillsList {
@@ -8,6 +9,11 @@ export interface BillsList {
 }
 
 export interface Bill {
-  Title: string;
   Id: string;
+  Title: string;
+  Payed: boolean;
+  Late: boolean;
+  Amount: number;
+  Responsible: string;
+  Date: Date;
 }

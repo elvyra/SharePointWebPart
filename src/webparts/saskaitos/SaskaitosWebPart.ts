@@ -10,7 +10,7 @@ import { SPHttpClient, SPHttpClientResponse } from "@microsoft/sp-http";
 
 import * as strings from "SaskaitosWebPartStrings";
 import Saskaitos from "./components/Saskaitos";
-import { ISaskaitosProps, BillsList } from "./components/ISaskaitosProps";
+import { ISaskaitosProps, BillsList, Bill } from "./components/ISaskaitosProps";
 
 export interface ISaskaitosWebPartProps {
   description: string;
@@ -20,12 +20,12 @@ export default class SaskaitosWebPart extends BaseClientSideWebPart<
   ISaskaitosWebPartProps
 > {
   public async render(): Promise<void> {
-    console.log(await this._getListData());
     const element: React.ReactElement<ISaskaitosProps> = React.createElement(
       Saskaitos,
       {
         description: this.properties.description,
         absoluteUrl: this.context.pageContext.web.absoluteUrl,
+        list: await this._getListData(),
       }
     );
 
@@ -69,8 +69,28 @@ export default class SaskaitosWebPart extends BaseClientSideWebPart<
           `/_api/web/lists/GetByTitle('Sąskaitos')/Items`,
         SPHttpClient.configurations.v1
       )
-      .then((response: SPHttpClientResponse) => {
-        return response.json();
+      .then((response: SPHttpClientResponse) => response.json())
+      .then((json) => this._mapper(json.value))
+      .catch((err) => {
+        console.log("Error:", err);
+        let arr: BillsList = { value: [] };
+        return arr;
       });
+  }
+
+  private _mapper(list: any[]): BillsList {
+    let mappedList: Bill[] = [];
+    mappedList = list.map((item) => {
+      return {
+        Id: item.Id,
+        Title: item.S_x0105_skaitosnumeris,
+        Payed: item.Apmok_x0117_ta,
+        Late: item.V_x0117_luojama_x0020_apmok_x0110 == 0 ? false : true,
+        Amount: item.Bendrasuma,
+        Responsible: item.Atsakingasasmuo,
+        Date: item.Dokumentodata,
+      };
+    });
+    return { value: mappedList };
   }
 }

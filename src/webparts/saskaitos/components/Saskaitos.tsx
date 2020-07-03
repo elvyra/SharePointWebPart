@@ -5,6 +5,8 @@ import { escape } from "@microsoft/sp-lodash-subset";
 
 export default class Saskaitos extends React.Component<ISaskaitosProps, {}> {
   public render(): React.ReactElement<ISaskaitosProps> {
+    let list = this.props.list.value;
+    console.log("Gavau lista: ", list);
     return (
       <div className={styles.saskaitos}>
         <div className={styles.container}>
