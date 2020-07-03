@@ -19,5 +19,5 @@ export interface Bill {
   Late: boolean;
   Amount: number;
   Responsible: string;
-  Date: Date;
+  Date: string;
 }
