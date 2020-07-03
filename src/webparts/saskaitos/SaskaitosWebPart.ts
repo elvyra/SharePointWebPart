@@ -9,7 +9,7 @@ import { BaseClientSideWebPart } from "@microsoft/sp-webpart-base";
 import { SPHttpClient, SPHttpClientResponse } from "@microsoft/sp-http";
 
 import * as strings from "SaskaitosWebPartStrings";
-import Saskaitos from "./components/Saskaitos";
+import Saskaitos from "./components/saskaitos/Saskaitos";
 import { ISaskaitosProps, BillsList, Bill } from "./components/ISaskaitosProps";
 
 export interface ISaskaitosWebPartProps {

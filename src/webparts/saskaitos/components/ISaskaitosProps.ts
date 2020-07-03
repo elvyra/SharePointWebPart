@@ -4,6 +4,10 @@ export interface ISaskaitosProps {
   list: BillsList;
 }
 
+export interface ISaskaitaProps {
+  item: Bill;
+}
+
 export interface BillsList {
   value: Bill[];
 }
